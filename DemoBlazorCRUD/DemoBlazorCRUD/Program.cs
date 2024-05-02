@@ -4,6 +4,7 @@ using DemoBlazorCRUD.Data;
 using DemoBlazorCRUD.Implementations;
 using Microsoft.EntityFrameworkCore;
 using SharedLibrary.ProductRepositories;
+using SharedLibrary.HealthEduRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Wooo! Connection is not found"));
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddScoped<IHealthEduRepository, HealthEduRepository>();
+
 
 builder.Services.AddScoped(http => new HttpClient
 {

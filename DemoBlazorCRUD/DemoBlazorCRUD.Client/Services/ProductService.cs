@@ -1,8 +1,6 @@
 ﻿using SharedLibrary.Models;
 using SharedLibrary.ProductRepositories;
 using System.Net.Http.Json;
-using System.Reflection;
-
 namespace DemoBlazorCRUD.Client.Services
 {
     public class ProductService : IProductRepository
@@ -26,7 +24,7 @@ namespace DemoBlazorCRUD.Client.Services
             return response!;
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        async Task<List<Product>> IProductRepository.GetAllProductsAsync()
         {
             var products = await httpClient.GetAsync("api/Product/All-Products");
             var response = await products.Content.ReadFromJsonAsync<List<Product>>();

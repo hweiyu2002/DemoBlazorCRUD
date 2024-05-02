@@ -1,0 +1,106 @@
+﻿@page "/healthEdu-list"
+
+@rendermode InteractiveAuto
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card">
+                    <div class="card-header">
+                        <button class="btn btn-primary float-end" @onclick="NavigateToAddHealthEduPage">新增衛教資訊</button>
+                    </div>
+                </div>
+                @if (HealthEdus.Count > 0)
+                {
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>類別</th>
+                                    <th>主題</th>
+                                    <th>連結</th>
+                                    <th>修改/刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var healthEdu in HealthEdus)
+                                {
+                                    <tr>
+                                        <td>@healthEdu.Id</td>
+                                        <td>@healthEdu.Class</td>
+                                        <td>@healthEdu.Title</td>
+                                        <td>
+                                            <a href="@healthEdu.Link" target="_blank">
+                                                <img src="https://img.youtube.com/vi/StrBf3zvG-k/0.jpg" alt="Video Thumbnail" style="max-width: 100px;">
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <div class="hstack gap-2">
+                                                <button class="btn  btn-info" @onclick="()=>Edit(healthEdu)">修改</button>
+                                                <button class="btn  btn-danger" @onclick="() => Delete(healthEdu.Id)">刪除</button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info"> No HealthEdu Available </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+        private List<HealthEdu> HealthEdus { get; set; } = new();
+
+        private async Task LoadHealthEdus()
+        {
+                var healthEdus = await HealthEduService.GetAllHealthEduAsync();
+                HealthEdus?.Clear();
+                if (HealthEdus is null) return;
+                foreach (var healthEdu in healthEdus)
+                HealthEdus.Add(healthEdu);
+        }
+
+
+        protected override async Task OnInitializedAsync() => await LoadHealthEdus();
+
+        private void NavigateToAddHealthEduPage() => NavigationManager.NavigateTo("manage-healthEdu");
+
+        private void Edit(HealthEdu model)
+        {
+            NavigationManager.NavigateTo($"manage-healthEdu/{model.Id}");
+        }
+
+        private async Task Delete(int id)
+        {
+            var healthEdu = await HealthEduService.DeleteHealthEduAsync(id);
+            await LoadHealthEdus();
+        }
+
+
+        private string GetYouTubeId(string youtubeUrl)
+        {
+            var uri = new Uri(youtubeUrl);
+            var queryParams = uri.Query.TrimStart('?').Split('&');
+            foreach (var param in queryParams)
+            {
+                var pair = param.Split('=');
+                if (pair.Length == 2 && pair[0] == "v")
+            {
+                return pair[1];
+            }
+            }
+                return null;
+        }
+
+}

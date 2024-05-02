@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card">
                     <div class="card-header">
-                        <button class="btn btn-primary float-end" @onclick="NavigateToAddProductPage">Add Product</button>
+                        <button class="btn btn-primary float-end" @onclick="NavigateToAddProductPage">新增表單</button>
                     </div>
                     </div>
                 @if (Products.Count > 0)
@@ -16,10 +16,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Product Id</th>
-                                    <th>Product Name</th>
-                                    <th>Product Quantity</th>
-                                    <th>Actions</th>
+                                    <th>Id</th>
+                                    <th>姓名</th>
+                                    <th>病歷號</th>
+                                    <th>評估日期</th>
+                                    <th>修改/刪除</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,11 +29,12 @@
                                     <tr>
                                         <td>@product.Id</td>
                                         <td>@product.Name</td>
-                                        <td>@product.Quantity</td>
+                                        <td>@product.Number</td>
+                                        <td>@product.AssessmentDate</td>
                                         <td>
                                             <div class="hstack gap-2">
-                                                <button class="btn  btn-info" @onclick="()=>Edit(product)"> Edit</button>
-                                                <button class="btn  btn-danger" @onclick="() => Delete(product.Id)"> Delete</button>
+                                                <button class="btn  btn-info" @onclick="()=>Edit(product)">修改</button>
+                                                <button class="btn  btn-danger" @onclick="() => Delete(product.Id)">刪除</button>
 
                                             </div>
                                         </td>
@@ -63,10 +65,7 @@
             Products.Add(product);
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadProducts();
-    }
+    protected override async Task OnInitializedAsync() => await LoadProducts();
 
     private void NavigateToAddProductPage()
     {

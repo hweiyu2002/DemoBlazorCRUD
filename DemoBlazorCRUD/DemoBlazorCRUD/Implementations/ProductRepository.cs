@@ -46,7 +46,15 @@ namespace DemoBlazorCRUD.Implementations
             var product = await appDbContext.Products.FirstOrDefaultAsync(_ => _.Id == model.Id);
             if (product is null) return null! ;
             product.Name = model.Name;
-            product.Quantity = model.Quantity;
+            product.Number = model.Number;
+            product.AssessmentDate = model.AssessmentDate;
+            product.Height = model.Height;
+            product.Weight = model.Weight; 
+            product.Consciousness = model.Consciousness;
+            product.BP = model.BP;
+            product.HR = model.HR;
+            product.RR = model.RR;
+            product.BT = model.BT;
             await appDbContext.SaveChangesAsync();
             return await appDbContext.Products.FirstOrDefaultAsync(_ => _.Id == model.Id);
         }

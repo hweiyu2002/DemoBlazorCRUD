@@ -1,0 +1,27 @@
+﻿@page "/information"
+
+<div class="container">
+    <h1>選擇資訊類別</h1>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.飲食指引)">飲食指引</button> &nbsp;
+            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.衛教資訊)">衛教資訊</button> &nbsp;
+            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.社會福利)">社會福利</button> &nbsp;
+            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.檢查報告)">檢查報告</button>
+        </div>
+</div>
+
+
+@code {
+    private void RedirectToCategory(HealthCategory category)
+    {
+        NavigationManager.NavigateTo($"/healthEdu-list?category={(int)category}");
+    }
+
+    public enum HealthCategory
+    {
+        衛教資訊,
+        飲食指引,
+        社會福利,
+        檢查報告
+    }
+}
