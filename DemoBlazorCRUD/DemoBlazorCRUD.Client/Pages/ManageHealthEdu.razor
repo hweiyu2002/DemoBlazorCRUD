@@ -29,7 +29,7 @@
                         </div>
                         
                         <br />
-                        <button type="submit" class="btn btn-primary" @onclick="HandleSubmit">儲存</button>
+                        <button type="submit" class="btn btn-primary">儲存</button>
 
                     </EditForm>
                 </div>
@@ -54,30 +54,17 @@
 
     private HealthEdu ReturnHealthEdu = new HealthEdu();
 
-    private async Task HandleSubmit()
-    {
-        await HandleSave();
-    }
-
     private async Task HandleSave()
     {
-        try
+        if (HealthEduModel.Id > 0)
         {
-            if (HealthEduModel.Id > 0)
-            {
-                ReturnHealthEdu = await HealthEduService.UpdateHealthEduAsync(HealthEduModel);
-                HealthEduModel = new HealthEdu();
-            }
-            else
-            {
-                ReturnHealthEdu = await HealthEduService.AddHealthEduAsync(HealthEduModel);
-                HealthEduModel = new HealthEdu();
-            }
+            ReturnHealthEdu = await HealthEduService.UpdateHealthEduAsync(HealthEduModel);
+            HealthEduModel = new HealthEdu();
         }
-        catch (Exception)
+        else
         {
-            // 处理异常，例如记录日志或显示错误消息给用户
+            ReturnHealthEdu = await HealthEduService.AddHealthEduAsync(HealthEduModel);
+            HealthEduModel = new HealthEdu();
         }
     }
-
 }

@@ -1,20 +1,39 @@
 ﻿@page "/information"
+@inject NavigationManager NavigationManager
+@rendermode InteractiveAuto
 
 <div class="container">
     <h1>選擇資訊類別</h1>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.飲食指引)">飲食指引</button> &nbsp;
-            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.衛教資訊)">衛教資訊</button> &nbsp;
-            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.社會福利)">社會福利</button> &nbsp;
-            <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.檢查報告)">檢查報告</button>
-        </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.飲食指引)">飲食指引</button> &nbsp;
+        <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.衛教資訊)">衛教資訊</button> &nbsp;
+        <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.社會福利)">社會福利</button> &nbsp;
+        <button class="btn btn-primary float-end" @onclick="() => RedirectToCategory(HealthCategory.檢查報告)">檢查報告</button>
+    </div>
 </div>
+
+<br/>
+
+@if (healthEduList != null)
+{
+    <div class="container">
+        @foreach (var item in healthEduList)
+        {
+            <div>@item.Title</div>
+            <div><a href="@item.Link" target="_blank">@item.Link</a></div>
+            <hr />
+        }
+    </div>
+}
 
 
 @code {
-    private void RedirectToCategory(HealthCategory category)
+    private List<HealthEdu> healthEduList { get; set; } = new();
+
+    private async Task RedirectToCategory(HealthCategory category)
     {
-        NavigationManager.NavigateTo($"/healthEdu-list?category={(int)category}");
+        string className = category.ToString();
+        healthEduList = await HealthEduService.GetHealthEduByClassAsync(className);
     }
 
     public enum HealthCategory

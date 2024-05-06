@@ -32,9 +32,34 @@
                                         <td>@healthEdu.Class</td>
                                         <td>@healthEdu.Title</td>
                                         <td>
-                                            <a href="@healthEdu.Link" target="_blank">
-                                                <img src="https://img.youtube.com/vi/StrBf3zvG-k/0.jpg" alt="Video Thumbnail" style="max-width: 100px;">
-                                            </a>
+                                            @{
+                                                var uri = new Uri(healthEdu.Link);
+                                                // 判断链接主机部分是否为 YouTube
+                                                if (uri.Host.Contains("youtube.com"))
+                                                {
+                                                    // 获取视频ID
+                                                    string videoId = GetYouTubeId(healthEdu.Link);
+                                                    if (videoId != null)
+                                                    {
+                                                        // 构建缩略图URL
+                                                        string thumbnailUrl = $"https://img.youtube.com/vi/{videoId}/0.jpg";
+                                                        // 显示缩略图
+                                                        <a href="@healthEdu.Link" target="_blank">
+                                                            <img src="@thumbnailUrl" alt="Video Thumbnail" style="max-width: 100px;">
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        // 如果无法提取视频ID，则显示默认的无图像
+                                                        <span>No Thumbnail</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // 非 YouTube 链接，直接显示超链接
+                                                    <a href="@healthEdu.Link" target="_blank">@healthEdu.Link</a>
+                                                }
+                                            }
                                         </td>
 
                                         <td>
@@ -88,19 +113,19 @@
         }
 
 
-        private string GetYouTubeId(string youtubeUrl)
+    private string GetYouTubeId(string youtubeUrl)
+    {
+        var uri = new Uri(youtubeUrl);
+        var queryParams = uri.Query.TrimStart('?').Split('&');
+        foreach (var param in queryParams)
         {
-            var uri = new Uri(youtubeUrl);
-            var queryParams = uri.Query.TrimStart('?').Split('&');
-            foreach (var param in queryParams)
-            {
-                var pair = param.Split('=');
-                if (pair.Length == 2 && pair[0] == "v")
+            var pair = param.Split('=');
+            if (pair.Length == 2 && pair[0] == "v")
             {
                 return pair[1];
             }
-            }
-                return null;
         }
+        return null;
+    }
 
 }
