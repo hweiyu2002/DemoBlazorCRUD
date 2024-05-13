@@ -10,8 +10,8 @@ namespace SharedLibrary.Models
         [Required]
         public int Number { get; set; }
         public DateTime? AssessmentDate { get; set; }= DateTime.MinValue;
-        public int? Height { get; set; }
-        public int? Weight { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
         public string? Consciousness { get; set; }
         public int? BP { get; set; }
         public int? HR { get; set; }

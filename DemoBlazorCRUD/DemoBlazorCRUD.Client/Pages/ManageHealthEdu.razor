@@ -59,12 +59,14 @@
         if (HealthEduModel.Id > 0)
         {
             ReturnHealthEdu = await HealthEduService.UpdateHealthEduAsync(HealthEduModel);
-            HealthEduModel = new HealthEdu();
         }
         else
         {
             ReturnHealthEdu = await HealthEduService.AddHealthEduAsync(HealthEduModel);
-            HealthEduModel = new HealthEdu();
         }
+
+        HealthEduModel = new HealthEdu(); // 清空表單數據
+        StateHasChanged(); // 觸發頁面重新渲染
     }
+}
 }
