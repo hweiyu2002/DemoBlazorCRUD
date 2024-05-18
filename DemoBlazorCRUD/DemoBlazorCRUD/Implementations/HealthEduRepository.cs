@@ -15,7 +15,7 @@ namespace DemoBlazorCRUD.Implementations
         public async Task<HealthEdu> AddHealthEduAsync(HealthEdu model)
         {
             if (model is null) return null!;
-            var chk = await appDbContext.HealthEdu.Where(_ => _.Title.ToLower().Equals(model.Title.ToLower())).FirstOrDefaultAsync();
+            var chk = await appDbContext.HealthEdu.Where(_ => _.Class.ToLower().Equals(model.Class.ToLower())).FirstOrDefaultAsync();
             if (chk is not null) return null!;
 
             var newDataAdded = appDbContext.HealthEdu.Add(model).Entity;

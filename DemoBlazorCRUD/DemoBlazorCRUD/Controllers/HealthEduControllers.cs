@@ -14,7 +14,7 @@ namespace DemoBlazorCRUD.Controllers
         }
 
         [HttpGet("All-HealthEdus")]
-        public async Task<ActionResult<List<HealthEdu>>> GetAllHealthEdusAsync()
+        public async Task<ActionResult<List<HealthEdu>>> GetAllHealthEduAsync()
         {
             var healthEdus = await healthEduRepository.GetAllHealthEdusAsync();
             return Ok(healthEdus);
