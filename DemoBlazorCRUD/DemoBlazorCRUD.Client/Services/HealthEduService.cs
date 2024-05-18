@@ -24,10 +24,10 @@ namespace DemoBlazorCRUD.Client.Services
             return response!;
         }
 
-        async Task<List<HealthEdu>> IHealthEduRepository.GetAllHealthEduAsync()
+        async Task<List<HealthEdu>> IHealthEduRepository.GetAllHealthEdusAsync()
         {
-            var healthEdu = await httpClient.GetAsync("api/HealthEdu/All-HealthEdu");
-            var response = await healthEdu.Content.ReadFromJsonAsync<List<HealthEdu>>();
+            var healthEdus = await httpClient.GetAsync("api/HealthEdu/All-HealthEdus");
+            var response = await healthEdus.Content.ReadFromJsonAsync<List<HealthEdu>>();
             return response!;
         }
 

@@ -32,7 +32,7 @@ namespace DemoBlazorCRUD.Implementations
             return healthEdu;
         }
 
-        public async Task<List<HealthEdu>> GetAllHealthEduAsync() => await appDbContext.HealthEdu.ToListAsync();
+        public async Task<List<HealthEdu>> GetAllHealthEdusAsync() => await appDbContext.HealthEdu.ToListAsync();
 
         public async Task<HealthEdu> GetHealthEduByIdAsync(int healthEduId)
         {
@@ -47,8 +47,8 @@ namespace DemoBlazorCRUD.Implementations
             if (healthEdu is null) return null!;
             healthEdu.Title = model.Title;
             healthEdu.Link = model.Link;
-      
-           
+            healthEdu.Class = model.Class;
+          
             await appDbContext.SaveChangesAsync();
             return await appDbContext.HealthEdu.FirstOrDefaultAsync(_ => _.Id == model.Id);
         }

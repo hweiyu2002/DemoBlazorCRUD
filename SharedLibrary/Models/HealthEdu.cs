@@ -6,8 +6,8 @@ namespace SharedLibrary.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Class {  get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
+        public string? Class {  get; set; } 
+        public string? Title { get; set; } 
         [Required]
         public string? Link { get; set; }
        

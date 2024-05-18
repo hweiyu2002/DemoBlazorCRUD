@@ -1,7 +1,6 @@
 ﻿@page "/manage-healthEdu"
 @page "/manage-healthEdu/{Id:int}"
 @rendermode InteractiveAuto
-<!--attribute [RenderModeInteractiveAuto]-->
 
 <div class="container">
     <div class="row">
@@ -27,25 +26,25 @@
                             <InputText @bind-Value="HealthEduModel.Link" class="form-control"></InputText>
                             <ValidationMessage For="()=>HealthEduModel.Link"></ValidationMessage>
                         </div>
-                        
+
                         <br />
                         <button type="submit" class="btn btn-primary">儲存</button>
-
                     </EditForm>
                 </div>
 
                 <div class="card-footer">
-                    Id: @ReturnHealthEdu.Id <br />
-                    類別:@ReturnHealthEdu.Class<br />
-                    主題:@ReturnHealthEdu.Title <br />
-                    連結: @ReturnHealthEdu.Link<br />
+                        <div>
+                            Id: @ReturnHealthEdu.Id <br />
+                            類別: @ReturnHealthEdu.Class<br />
+                            主題: @ReturnHealthEdu.Title <br />
+                            連結: @ReturnHealthEdu.Link<br />
+                        </div>
                 </div>
                 <br />
             </div>
         </div>
     </div>
 </div>
-
 
 @code {
     public HealthEdu HealthEduModel { get; set; } = new HealthEdu();
@@ -54,19 +53,21 @@
 
     private HealthEdu ReturnHealthEdu = new HealthEdu();
 
+
     private async Task HandleSave()
     {
         if (HealthEduModel.Id > 0)
         {
             ReturnHealthEdu = await HealthEduService.UpdateHealthEduAsync(HealthEduModel);
+            HealthEduModel = new HealthEdu(); // 清空表單數據
         }
         else
         {
             ReturnHealthEdu = await HealthEduService.AddHealthEduAsync(HealthEduModel);
+            HealthEduModel = new HealthEdu();
         }
 
-        HealthEduModel = new HealthEdu(); // 清空表單數據
-        StateHasChanged(); // 觸發頁面重新渲染
+        
+        //StateHasChanged(); // 觸發頁面重新渲染
     }
-}
 }

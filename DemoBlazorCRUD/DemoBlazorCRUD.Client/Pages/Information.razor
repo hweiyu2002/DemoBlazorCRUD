@@ -63,87 +63,111 @@
                 <tbody>
                     <tr>
                         <th>患者姓名</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.PatientName</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>檢查日期</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.CheckupDate</div>
-                            }</td>
+                                <div>@report.CheckupDate.ToString("yyyy-MM-dd")</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
-                        <th>白細胞計數</th>
-                        <td>@foreach (var report in checkupReports)
+                        <th>白血球計數</th>
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.WhiteBloodCellCount</div>
-                            }</td>
+                                <div style="color:@(IsWhiteBloodCellCountNormal(report.WhiteBloodCellCount) ? "black" : "red"); font-weight:@(IsWhiteBloodCellCountNormal(report.WhiteBloodCellCount) ? "normal" : "bold")">@report.WhiteBloodCellCount</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
-                        <th>紅細胞計數</th>
-                        <td>@foreach (var report in checkupReports)
+                        <th>紅血球計數</th>
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.RedBloodCellCount</div>
-                            }</td>
+                                <div style="color:@(IsRedBloodCellCountNormal(report.RedBloodCellCount) ? "black" : "red"); font-weight:@(IsRedBloodCellCountNormal(report.RedBloodCellCount) ? "normal" : "bold")">@report.RedBloodCellCount</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>血小板計數</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.PlateletCount</div>
-                            }</td>
+                                <div style="color:@(IsPlateletCountNormal(report.PlateletCount) ? "black" : "red"); font-weight:@(IsPlateletCountNormal(report.PlateletCount) ? "normal" : "bold")">@report.PlateletCount</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
-                        <th>血紅蛋白濃度</th>
-                        <td>@foreach (var report in checkupReports)
+                        <th>血紅素檢查</th>
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.Hemoglobin</div>
-                            }</td>
+                                <div style="color:@(IsHemoglobinNormal(report.Hemoglobin) ? "black" : "red"); font-weight:@(IsHemoglobinNormal(report.Hemoglobin) ? "normal" : "bold")">@report.Hemoglobin</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>血型</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.BloodType</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>尿比重</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
-                                <div>@report.UrineSpecificGravity</div>
-                            }</td>
+                                <div style="color:@(IsUrineSpecificGravityNormal(report.UrineSpecificGravity) ? "black" : "red"); font-weight:@(IsUrineSpecificGravityNormal(report.UrineSpecificGravity) ? "normal" : "bold")">@report.UrineSpecificGravity</div>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>尿蛋白</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.UrineProtein</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>尿酸鹽</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.UrineSalt</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th>尿酮體</th>
-                        <td>@foreach (var report in checkupReports)
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.UrineKetone</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <tr>
-                        <th>尿白細胞</th>
-                        <td>@foreach (var report in checkupReports)
+                        <th>尿白血球</th>
+                        <td>
+                            @foreach (var report in checkupReports)
                             {
                                 <div>@report.UrineWhiteBloodCell</div>
-                            }</td>
+                            }
+                        </td>
                     </tr>
                     <!-- 其他檢查項目的列 -->
                 </tbody>
@@ -191,23 +215,29 @@
         {
             new CheckupReport
             {
-                PatientName = "John Doe",
+                PatientName = "李大民",
                 CheckupDate = DateTime.Now.AddDays(-30),
-                WhiteBloodCellCount = 7500,
-                RedBloodCellCount = 5000000,
+                WhiteBloodCellCount = 4300,
+                RedBloodCellCount = 3800000,
                 PlateletCount = 300000,
-                Hemoglobin = 15,
+                Hemoglobin = 12,
                 BloodType = "O+",
                 UrineSpecificGravity = 1.020,
-                UrineProtein = "Negative",
-                UrineSalt = "Normal",
-                UrineKetone = "Negative",
+                UrineProtein = "陰性",
+                UrineSalt = "正常",
+                UrineKetone = "陰性",
                 UrineWhiteBloodCell = "0-2 /hpf"
                 // 其他檢查項目的數據
             },
             // 其他檢查報告
         };
     }
+
+    private bool IsWhiteBloodCellCountNormal(int count) => count >= 4000 && count <= 10000;
+    private bool IsRedBloodCellCountNormal(int count) => count >= 4000000 && count <= 6000000;
+    private bool IsPlateletCountNormal(int count) => count >= 150000 && count <= 450000;
+    private bool IsHemoglobinNormal(int count) => count >= 13 && count <= 17; // 男性正常範圍
+    private bool IsUrineSpecificGravityNormal(double value) => value >= 1.005 && value <= 1.030;
 
     public class CheckupReport
     {
@@ -223,7 +253,7 @@
         public string UrineSalt { get; set; }
         public string UrineKetone { get; set; }
         public string UrineWhiteBloodCell { get; set; }
-        // 其他檢查項目的屬性
+
     }
 
     public enum HealthCategory

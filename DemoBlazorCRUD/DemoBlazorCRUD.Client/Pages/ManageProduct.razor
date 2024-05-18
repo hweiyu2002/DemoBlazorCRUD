@@ -109,24 +109,24 @@
 
                 <div class="card-footer">
                     Id: @ReturnProduct.Id <br />
-                    姓名:@ReturnProduct.Name <br />
+                    姓名: @ReturnProduct.Name <br />
                     病歷號: @ReturnProduct.Number<br />
-                    評估日期:@ReturnProduct.AssessmentDate<br />
-                    身高:@ReturnProduct.Height<br />
-                    體重:@ReturnProduct.Weight<br />
-                    意識:@ReturnProduct.Consciousness <br />
-                    血壓:@ReturnProduct.BP<br />
-                    心律:@ReturnProduct.HR<br />
-                    呼吸次數:@ReturnProduct.RR<br />
-                    體溫:@ReturnProduct.BT<br />
-                    目前身體狀況:@ReturnProduct.PhysicalCondition<br />
-                    出國狀況:@ReturnProduct.Abroad<br />
-                    職業:@ReturnProduct.Occupation<br />
-                    過敏史:@ReturnProduct.AllergyHistory<br />
-                    疾病史:@ReturnProduct.MedicalHistory<br />
-                    副作用:@ReturnProduct.SideEffects<br />
-                    操作人員:@ReturnProduct.Operator<br />
-                    操作時間:@ReturnProduct.OperationTime <br />
+                    評估日期: @((ReturnProduct.AssessmentDate != null) ? ReturnProduct.AssessmentDate.Value.ToString("yyyy-MM-dd") : "") <br />
+                    身高: @ReturnProduct.Height<br />
+                    體重: @ReturnProduct.Weight<br />
+                    意識: @ReturnProduct.Consciousness <br />
+                    血壓: @ReturnProduct.BP<br />
+                    心律: @ReturnProduct.HR<br />
+                    呼吸次數: @ReturnProduct.RR<br />
+                    體溫: @ReturnProduct.BT<br />
+                    目前身體狀況: @ReturnProduct.PhysicalCondition<br />
+                    出國狀況: @ReturnProduct.Abroad<br />
+                    職業: @ReturnProduct.Occupation<br />
+                    過敏史: @ReturnProduct.AllergyHistory<br />
+                    疾病史: @ReturnProduct.MedicalHistory<br />
+                    副作用: @ReturnProduct.SideEffects<br />
+                    操作人員: @ReturnProduct.Operator<br />
+                    操作時間: @((ReturnProduct.OperationTime != null) ? ReturnProduct.OperationTime.Value.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss") : "") <br />
                 </div>
                 <br />
             </div>
@@ -149,8 +149,6 @@
         else
             ProductModel.AssessmentDate = DateTime.Today; // Set default assessment date to today's date
     }
-
-
 
     private async Task HandleSave()
     {

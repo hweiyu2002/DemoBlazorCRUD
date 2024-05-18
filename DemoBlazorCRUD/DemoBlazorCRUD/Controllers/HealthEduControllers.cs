@@ -13,11 +13,11 @@ namespace DemoBlazorCRUD.Controllers
             this.healthEduRepository = healthEduRepository;
         }
 
-        [HttpGet("All-HealthEdu")]
-        public async Task<ActionResult<List<HealthEdu>>> GetAllHealthEduAsync()
+        [HttpGet("All-HealthEdus")]
+        public async Task<ActionResult<List<HealthEdu>>> GetAllHealthEdusAsync()
         {
-            var healthEdu = await healthEduRepository.GetAllHealthEduAsync();
-            return Ok(healthEdu);
+            var healthEdus = await healthEduRepository.GetAllHealthEdusAsync();
+            return Ok(healthEdus);
         }
 
         [HttpGet("Single-HealthEdu/{id}")]

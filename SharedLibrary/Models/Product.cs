@@ -16,7 +16,7 @@ namespace SharedLibrary.Models
         public int? BP { get; set; }
         public int? HR { get; set; }
         public int? RR { get; set; }
-        public int? BT { get; set; }
+        public double? BT { get; set; }
         public string? PhysicalCondition {  get; set; }
         public string? Abroad { get; set; }
         public string? Occupation { get; set; }

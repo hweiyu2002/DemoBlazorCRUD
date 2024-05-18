@@ -100,7 +100,7 @@
 
     private async Task LoadHealthEdus()
     {
-        var healthEdus = await HealthEduService.GetAllHealthEduAsync();
+        var healthEdus = await HealthEduService.GetAllHealthEdusAsync();
         HealthEdus?.Clear();
         if (HealthEdus is null) return;
         foreach (var healthEdu in healthEdus)
