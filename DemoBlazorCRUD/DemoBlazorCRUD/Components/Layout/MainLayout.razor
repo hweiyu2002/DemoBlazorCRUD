@@ -1,23 +1,149 @@
 ﻿@inherits LayoutComponentBase
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+
+<PageTitle>DemoBlazorCRUD</PageTitle>
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
-
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+        <article>
+            @if (!IsAuthenticated)
+            {
+                <div class="login-wrapper">
+                    <div class="login-container">
+                        <div class="logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/zh/2/21/Mackay_Memorial_Hospital_Logo.png" alt="Logo" />
+                        </div>
 
-        <article class="content px-4">
-            @Body
+                        <div class="identity-selection">
+                            <label>
+                                <input type="radio" name="identity" value="medical" @onchange="SelectIdentity" checked="@IsMedicalChecked" /> 醫療人員
+                            </label>
+                            <label>
+                                <input type="radio" name="identity" value="patient" @onchange="SelectIdentity" checked="@IsPatientChecked" /> 病人
+                            </label>
+                        </div>
+
+                        <EditForm Model="loginModel" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <div class="form-group">
+                                <label for="username">帳號</label>
+                                <InputText id="username" class="form-control" @bind-Value="loginModel.Username" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">密碼</label>
+                                <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">登入</button>
+                        </EditForm>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Body
+            }
         </article>
     </main>
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+@code {
+    private bool IsAuthenticated = false;
+    private string SelectedIdentity = "medical"; // 預設選擇醫療人員
+    private LoginModel loginModel = new LoginModel();
+
+    private bool IsMedicalChecked => SelectedIdentity == "medical";
+    private bool IsPatientChecked => SelectedIdentity == "patient";
+
+    private void SelectIdentity(ChangeEventArgs e)
+    {
+        SelectedIdentity = e.Value.ToString();
+        Console.WriteLine($"Selected Identity: {SelectedIdentity}");
+        loginModel = new LoginModel();
+        StateHasChanged(); // 强制刷新
+    }
+
+    public void HandleValidSubmit()
+    {
+        Console.WriteLine($"登錄: 帳號: {loginModel.Username}, 密碼: {loginModel.Password}");
+
+        if (SelectedIdentity == "medical")
+        {
+            SetUserRole("medical");
+            Navigation.NavigateTo("/medical-dashboard");
+        }
+        else if (SelectedIdentity == "patient")
+        {
+            SetUserRole("patient");
+            Navigation.NavigateTo("/patient-dashboard");
+        }
+
+        IsAuthenticated = true;
+    }
+
+    public void SetUserRole(string role)
+    {
+        // Set user role logic here
+        StateHasChanged();
+    }
+
+    public class LoginModel
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
+}
+
+<style>
+    .page {
+        display: flex;
+    }
+
+    .login-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .login-container {
+        max-width: 400px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .logo img {
+        max-width: 50%;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .identity-selection {
+        margin-bottom: 1rem;
+    }
+
+        .identity-selection label {
+            margin: 0 1rem;
+        }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+</style>
